@@ -1,0 +1,9 @@
+dans le document de requetes
+        family ?
+        given ?
+
+mon mapping d'entité dans objet :
+    Par ModelWrapper
+    possible de le faire par un Stream ?
+
+image docker laquelle prendre juste le java ou maven avec java 17
