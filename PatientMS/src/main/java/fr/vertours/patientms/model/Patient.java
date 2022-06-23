@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -24,10 +26,10 @@ public class Patient {
     @NotBlank(message = "LastName is mandatory")
     private String lastName;
 
-    @NotEmpty(message = "Date of birth is mandatory")
+    @NotNull(message = "Date of birth is mandatory")
     private LocalDate dateOfBirth;
 
-    @NotEmpty(message = "Gender is mandatory")
+    @NotNull(message = "Gender is mandatory")
     private char gender;
 
     @NotBlank(message = "address is mandatory")
