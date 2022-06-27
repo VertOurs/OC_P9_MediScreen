@@ -14,7 +14,7 @@ import java.util.List;
 @Api("API for CRUD operations on patients")
 @RestController
 @Slf4j
-@RequestMapping("/api/patient")
+@RequestMapping("/api/patient")                                 //Interface oipenfeign ?
 public class PatientController {
 
     private final PatientService service;
