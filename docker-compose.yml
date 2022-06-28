@@ -1,32 +1,30 @@
 version: "3.3"
 
 services:
+  patientdb:
+    image: mysql:8
+    container_name: patient_db_sql
+    restart: always
+    environment:
+      MYSQL_ROOT_USERNAME: root
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: patient_db_sql
+    ports:
+      - "23306:3306"
+    volumes:
+      - patientdb_data:/data/db
 
   patient:
-    build: PatientMS/.
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://patientdb:3306/patient
+    image: patient_ms
+    container_name: patient_ms
     depends_on:
-      - patientdb
-    ports:
-      - "8080:8080"
-    networks:
-      mediscreennetwork:
-        ipv4_address: 172.20.0.2
-
-  patientdb:
-    image: "mysql:8.0"
+          - patientdb
     environment:
-      - MYSQL_ROOT_PASSWORD=rootroot
-      - MYSQL_DATABASE=patient
+      SPRING_DATASOURCE_URL: jdbc:mysql://patient_db_sql:3306/patient
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootroot
     ports:
-      - "3351:3306"
-    networks:
-      mediscreennetwork:
-        ipv4_address: 172.20.0.3
+      - "8081:8081"
 
-networks:
-  mediscreennetwork:
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
+volumes:
+    patientdb_data:
