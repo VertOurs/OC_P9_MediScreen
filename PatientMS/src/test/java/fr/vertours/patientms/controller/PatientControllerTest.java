@@ -63,16 +63,13 @@ class PatientControllerTest {
     @Test
     @Disabled
     void savePatient() throws Exception {
-        String newPatient = """
-                {
-                    "firstName" : "Aymeric",
-                    "lastName" : "Perrin",
-                    "dateOfBirth" : "1966-12-31",
-                    "gender" : "M",
-                    "address" : "1551, rue Louis Blériot",
-                    "phone": "06 74 89 65 14"
-                }
-                """;
+        String newPatient = " { "
+                + "\"firstName\" : \"Aymeric\","
+                + " \"lastName\" : \"Perrin\","
+                + " \"dateOfBirth\" : \"1966-12-31\","
+                + " \"gender\" : \"M\","
+                + " \"address\" : \"1551, rue Louis Blériot\","
+                + " \"phone\": \"06 74 89 65 14\" }";
 
         mvc.perform(post("/api/patient/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -84,16 +81,13 @@ class PatientControllerTest {
     @Test
     @Disabled
     void updatePatient() throws Exception {
-        String updatePatient = """
-                {
-                    "firstName" : "Léa",
-                    "lastName" : "Perrin",
-                    "dateOfBirth" : "1966-12-31",
-                    "gender" : "M",
-                    "address" : "1551, rue Louis Blériot",
-                    "phone": "06 74 89 65 14"
-                }
-                """;
+        String updatePatient = " { "
+                + "\"firstName\" : \"Léa\","
+                + " \"lastName\" : \"Perrin\","
+                + " \"dateOfBirth\" : \"1966-12-31\","
+                + " \"gender\" : \"F\","
+                + " \"address\" : \"1551, rue Louis Blériot\","
+                + " \"phone\": \"06 74 89 65 14\" }";
 
         mvc.perform(put("/api/patient/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
