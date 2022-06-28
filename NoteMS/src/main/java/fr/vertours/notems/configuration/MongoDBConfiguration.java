@@ -11,18 +11,18 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @Configuration
 public class MongoDBConfiguration {
 
-    @Bean
-    public MongoClient mongo() {
-        ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/note");
-        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .build();
-
-        return MongoClients.create(mongoClientSettings);
-    }
-
-    @Bean
-    public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongo(), "note");
-    }
+//    @Bean
+//    public MongoClient mongo() {
+//        ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/note");
+//        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
+//                .applyConnectionString(connectionString)
+//                .build();
+//
+//        return MongoClients.create(mongoClientSettings);
+//    }
+//
+//    @Bean
+//    public MongoTemplate mongoTemplate() {
+//        return new MongoTemplate(mongo(), "note");
+//    }
 }

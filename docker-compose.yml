@@ -1,6 +1,7 @@
 version: "3.3"
 
 services:
+
   patientdb:
     image: mysql:8
     container_name: patient_db_sql
@@ -10,21 +11,48 @@ services:
       MYSQL_ROOT_PASSWORD: rootroot
       MYSQL_DATABASE: patient_db_sql
     ports:
-      - "23306:3306"
+      - "3308:3306"
     volumes:
       - patientdb_data:/data/db
 
   patient:
     image: patient_ms
     container_name: patient_ms
+    restart: always
     depends_on:
-          - patientdb
+      - patientdb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://patient_db_sql:3306/patient
+      SPRING_DATASOURCE_URL: jdbc:mysql://patient_db_sql:3308/patient
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootroot
     ports:
       - "8081:8081"
 
+  notedb:
+    image: mongo:5
+    container_name: note_db_nosql
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootroot
+    ports:
+      - "27017:27017"
+    volumes:
+      - notedb_data:/data/db
+
+  note:
+    image: note_ms
+    container_name: note_ms
+    restart: always
+    depends_on:
+      - notedb
+    environment:
+      SPRING_DATA_MONGODB_HOST: note_db_nosql
+      SPRING_DATA_MONGODB_USERNAME: root
+      SPRING_DATA_MONGODB_PASSWORD: rootroot
+    ports:
+      - "8082:8082"
+
 volumes:
-    patientdb_data:
+  patientdb_data:
+  notedb_data:
