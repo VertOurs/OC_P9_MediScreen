@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-
+  #-------------------Patient
   patientdb:
     image: mysql:8
     container_name: patient_db_sql
@@ -27,7 +27,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: rootroot
     ports:
       - "8081:8081"
-
+  #---------------------NOTE
   notedb:
     image: mongo:5
     container_name: note_db_nosql
@@ -52,6 +52,19 @@ services:
       SPRING_DATA_MONGODB_PASSWORD: rootroot
     ports:
       - "8082:8082"
+  # ------------------------Assess
+  assess:
+    image: assess_ms
+    container_name: assess_ms
+    restart: always
+    depends_on:
+      - patient
+      - note
+    environment:
+      - PATIENT_URL=patient:8081
+      - NOTE_URL=note:8082
+    ports:
+      - "8083:8083"
 
 volumes:
   patientdb_data:
