@@ -1,22 +1,20 @@
 package fr.vertours.webui.dto;
 
 
-import fr.vertours.assessms.model.Assessment;
-import fr.vertours.patientms.model.Patient;
+
+import fr.vertours.webui.bean.AssessBean;
+import fr.vertours.webui.bean.PatientBean;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class HomeDTO {
 
-    private List<Patient> patients = new ArrayList<>();
-    private Patient patient;
-    private Assessment assess;
-    private boolean hasAssess;
+    private List<PatientBean> patients = new ArrayList<>();
+    private Long patientId;
+    private LocalDate dateOfBirth;
 
-    public boolean isHasAssess() {
-        return assess != null;
-    }
 }

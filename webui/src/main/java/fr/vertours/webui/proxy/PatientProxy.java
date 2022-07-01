@@ -1,6 +1,6 @@
 package fr.vertours.webui.proxy;
 
-import fr.vertours.patientms.model.Patient;
+import fr.vertours.webui.bean.PatientBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +11,8 @@ import java.util.List;
 public interface PatientProxy {
 
     @GetMapping("/api/patient/{id}")
-    public Patient getPatientById(@PathVariable long id);
+    PatientBean getPatientById(@PathVariable long id);
 
     @GetMapping("/api/patient/all")
-    public List<Patient> allPatients();
+    List<PatientBean> allPatients();
 }

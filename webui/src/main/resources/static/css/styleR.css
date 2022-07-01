@@ -1,0 +1,27 @@
+body
+{
+    height : 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main
+{
+    border: solid;
+    border-width: thin;
+    border-color: gray ;
+    border-radius: 5% ;
+    padding: 2em;
+}
+.coche {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+p {
+    color: crimson;
+}
+
+

@@ -1,6 +1,7 @@
 package fr.vertours.webui.proxy;
 
-import fr.vertours.assessms.model.Assessment;
+
+import fr.vertours.webui.bean.AssessBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface AssessProxy {
 
     @GetMapping("/api/assess/{id}")
-    Assessment getAssessById(@PathVariable long id);
+    AssessBean getAssessById(@PathVariable long id);
+
+
 
 }

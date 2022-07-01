@@ -47,36 +47,27 @@
         <h1>Patients List</h1>
     </div>
 
-    <div class="blockWithInfoOnly">
-        <form class="row align-items-center formT" method="post" th:action="@{/home}">
-            <!-- select contact-->
-            <div class="col" >
-                <select class="form-select" th:field="*{patient}" >
-                    <option value="" selected>Select Patient</option>
-                    <option th:each="patient : *{patients}" th:value="${patient.id}" th:text="${patient.firstName}"></option>
-                </select>
-            </div>
 
-            <!-- Bouton Diagnostic -->
-            <div class="col">
-                <button class="btn btn-success col-12" type="submit">Diagnostic</button>
-            </div>
-        </form>
-    </div>
-    <div class="divTitre mb-2 mt-5" >
-        <h1> Result </h1>
-    </div>
-    <div class="blockWithInfoOnly">
-        <div class="blockInsideInfoOnly">
-            <p>the risk of diabetes for this patient is : </p>
-        </div>
-        <div class="blockInsideInfoOnly">
-            <p th:if="${!dto.hasAssess}">Undiagnosed</p>
-            <p th:if="${dto.hasAssess}" th:text="${dto.assess}"></p>
-
-<!--            th:text="*{bankName}"-->
-        </div>
-    </div>
+        <table >
+            <thead >
+            <tr  >
+                <th  class="fourCol">FirstName</th>
+                <th  class="fourCol">LastName</th>
+                <th  class="fourCol">Date of Birth</th>
+                <th  class="fourCol">Diagnostic</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="patient : ${dto.patients}">
+                <td th:text="${patient.firstName}"></td>
+                <td th:text="${patient.lastName}"></td>
+                <td th:text="${patient.dateOfBirth}"></td>
+                <td>
+                    <a class="btn btn-success col-5" type="" th:href="@{/result/{id}(id=${patient.patientId})}">Calculate Risk</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 </main>
 </body>
 </html>

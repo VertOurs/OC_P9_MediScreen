@@ -49,7 +49,7 @@ public class NoteController {
     @PostMapping("/create")
     public ResponseEntity<Note> saveNote(@RequestBody @Valid Note note) {
         Note noteCreated = service.saveNote(note);
-        log.debug("controller : create patient : " + note);
+        log.debug("controller : create Note : " + note);
         return ResponseEntity.ok().body(noteCreated);
     }
 
