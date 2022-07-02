@@ -20,8 +20,9 @@ main
     margin-right: auto;
 
 }
-p {
-    color: crimson;
+span {
+    font-weight: bold;
 }
+
 
 

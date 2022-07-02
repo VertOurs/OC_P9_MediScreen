@@ -2,9 +2,9 @@ package fr.vertours.webui.proxy;
 
 import fr.vertours.webui.bean.PatientBean;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @FeignClient( name="PatientMS", url="http://localhost:8081")
@@ -15,4 +15,9 @@ public interface PatientProxy {
 
     @GetMapping("/api/patient/all")
     List<PatientBean> allPatients();
+    @PostMapping("/api/patient/create")
+    PatientBean savePatient(@RequestBody @Valid PatientBean patient);
+
+    @PutMapping("api/patient/update/{id}")
+    PatientBean updatePatient(@PathVariable long id, @RequestBody @Valid PatientBean patient);
 }

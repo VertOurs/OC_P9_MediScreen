@@ -8,7 +8,7 @@
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
             crossorigin="anonymous"
     >
-    <link rel="stylesheet" href="css/mainStyle.css" />
+    <link rel="stylesheet" href="../css/mainStyle.css" />
     <title>Home - Mediscreen </title>
 </head>
 <body>
@@ -17,25 +17,15 @@
     <!-- First Block -->
     <nav id="navMenu" class="navbar navbar-expand-lg navbar-light bg-white p-0 m-0">
         <div>
-            <img class="m-0 width-0" src="images/logo.jpeg" alt="" width="145">
+            <img class="m-0 width-0" src="../images/logo.jpeg" alt="" width="145">
         </div>
         <div class="flex-row-reverse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item text-end">
-                    <a class="nav-link active text-primary " aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#" th:href="@{patient}">patient</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#" th:href="@{note}" >note</a>
-                </li>
-            </ul>
+            <img class="m-0 width-0" src="../images/logo.jpeg" alt="" width="145">
         </div>
     </nav>
     <!-- Home / Transfer -->
-    <div id="navBar" class="navbar-expand-lg p-1">
-        <p> Home / <span class="greyNav">Home</span></p>
+    <div id="navBar" class="navbar-expand-lg p-5 position-relative">
+        <h1 class="position-absolute top-50 start-50 translate-middle" > Mediscreen DashBoard</h1>
     </div>
 </section>
 
@@ -44,26 +34,38 @@
 <main th:object="${dto}">
     <!-- Block 1 -->
     <div class="divTitreWithButton mb-2" >
-        <h1>Patients List</h1>
+        <h2>Patients List</h2>
+        <a class="btn btn-primary" th:href="@{patient}">New Patient</a>
     </div>
 
 
         <table >
             <thead >
             <tr  >
-                <th  class="fourCol">FirstName</th>
-                <th  class="fourCol">LastName</th>
-                <th  class="fourCol">Date of Birth</th>
-                <th  class="fourCol">Diagnostic</th>
+                <th  class="col40">Actions</th>
+                <th  class="col5">Gender</th>
+                <th  class="col10">FirstName</th>
+                <th  class="col10">LastName</th>
+                <th  class="col10">Date of Birth</th>
+                <th  class="col10">Phone Number</th>
+                <th  class="col15">Address</th>
+                <th  class="col15">Diagnostic</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="patient : ${dto.patients}">
+                <td>
+                    <a class="btn btn-primary col-4" type="" th:href="@{/result/{id}(id=${patient.id})}">Note</a>
+                    <a class="btn btn-primary col-4" type="" th:href="@{/patient/{id}(id=${patient.id})}">Update</a>
+                </td>
+                <td th:text="${patient.gender}"></td>
                 <td th:text="${patient.firstName}"></td>
                 <td th:text="${patient.lastName}"></td>
                 <td th:text="${patient.dateOfBirth}"></td>
+                <td th:text="${patient.phone}"></td>
+                <td th:text="${patient.address}"></td>
                 <td>
-                    <a class="btn btn-success col-5" type="" th:href="@{/result/{id}(id=${patient.patientId})}">Calculate Risk</a>
+                    <a class="btn btn-danger col-8" type="" th:href="@{/result/{id}(id=${patient.id})}">Calculate Risk</a>
                 </td>
             </tr>
             </tbody>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link
@@ -8,22 +8,22 @@
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
             crossorigin="anonymous"
     >
-    <link rel="stylesheet" href="css/styleR.css" />
-    <title>Result - mediscreen</title>
+    <link rel="stylesheet" href="../css/styleR.css" />
+    <title>Home - Mediscreen </title>
 </head>
 <body>
-<main>
+<main th:object="${dto}">
     <div class=" text-center">
-        <img class="mb-4" src="images/logo.jpeg" alt="" width="150" height="60">
+        <img class="mb-4" src="../images/logo.jpeg" alt="" width="150" height="60">
         <div>
-            <p>The Patient **** is at risk:</p>
+            <p>The Patient : <span th:text="${dto.firstName} + ' ' + ${dto.lastName}"></span>, is at risk:</p>
         </div>
         <div>
-            <p> zoubi</p>
+            <p class="border border-warning" ><span th:text="${dto.assess}"></span></p>
         </div>
 
         <!--Register button -->
-        <a class="btn btn-success col-5" type="" th:href="@{/home}">Go back</a>
+        <a class="btn btn-success col-12" type="" th:href="@{/home}">Go back</a>
     </div>
 </main>
 
