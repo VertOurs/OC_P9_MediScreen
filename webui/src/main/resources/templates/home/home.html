@@ -42,7 +42,7 @@
         <table >
             <thead >
             <tr  >
-                <th  class="col40">Actions</th>
+                <th  class="col20">Actions</th>
                 <th  class="col5">Gender</th>
                 <th  class="col10">FirstName</th>
                 <th  class="col10">LastName</th>
@@ -55,7 +55,7 @@
             <tbody>
             <tr th:each="patient : ${dto.patients}">
                 <td>
-                    <a class="btn btn-primary col-4" type="" th:href="@{/result/{id}(id=${patient.id})}">Note</a>
+                    <a class="btn btn-primary col-4" type="" th:href="@{/note/{id}(id=${patient.id})}">Note</a>
                     <a class="btn btn-primary col-4" type="" th:href="@{/patient/{id}(id=${patient.id})}">Update</a>
                 </td>
                 <td th:text="${patient.gender}"></td>

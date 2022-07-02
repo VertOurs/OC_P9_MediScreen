@@ -117,9 +117,13 @@ td {
 .col15 {
     width: 15%;
 }
-.col40 {
+.col20 {
     width: 20%;
 }
+.col80 {
+    width: 80%;
+}
+
 
 
 
