@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoteController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">NoteMS</a> &gt; <a href="index.source.html" class="el_package">fr.vertours.notems.controller</a> &gt; <span class="el_source">NoteController.java</span></div><h1>NoteController.java</h1><pre class="source lang-java linenums">package fr.vertours.notems.controller;
+
+import fr.vertours.notems.domain.Note;
+import fr.vertours.notems.service.NoteService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@Api(&quot;API for CRUD operations on notes&quot;)
+@RestController
+<span class="fc" id="L16">@Slf4j</span>
+@RequestMapping(&quot;/api/note&quot;)
+public class NoteController {
+
+    private final NoteService service;
+
+<span class="fc" id="L22">    public NoteController(NoteService service) {</span>
+<span class="fc" id="L23">        this.service = service;</span>
+<span class="fc" id="L24">    }</span>
+
+    @ApiOperation(value = &quot;home application&quot;)
+    @GetMapping(&quot;&quot;)
+    public ResponseEntity&lt;String&gt; home() {
+<span class="fc" id="L29">        return ResponseEntity.ok().body(&quot;Greetings form NoteMS API !&quot;);</span>
+    }
+
+    @ApiOperation(value = &quot;Get all notes by Patient Id&quot;)
+    @GetMapping(&quot;/all/{patientId}&quot;)
+    public ResponseEntity&lt;List&lt;Note&gt;&gt; listNote(@PathVariable(&quot;patientId&quot;) Integer patientId) {
+<span class="fc" id="L35">        List&lt;Note&gt; notes = service.findAllNotesByPatientId(patientId);</span>
+<span class="fc" id="L36">        log.debug(&quot;controller : get the list of all note by patientId&quot;);</span>
+<span class="fc" id="L37">        return ResponseEntity.ok().body(notes);</span>
+    }
+
+    @ApiOperation(value = &quot;Get note by id&quot;)
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Note&gt; getNoteById(@PathVariable String id) {
+<span class="fc" id="L43">        Note note = service.getNoteById(id);</span>
+<span class="fc" id="L44">        log.debug(&quot;controller : get note by id : &quot; + id);</span>
+<span class="fc" id="L45">        return ResponseEntity.ok().body(note);</span>
+    }
+
+    @ApiOperation(value = &quot;Create new note&quot;)
+    @PostMapping(&quot;/create&quot;)
+    public ResponseEntity&lt;Note&gt; saveNote(@RequestBody @Valid Note note) {
+<span class="fc" id="L51">        Note noteCreated = service.saveNote(note);</span>
+<span class="fc" id="L52">        log.debug(&quot;controller : create Note : &quot; + note);</span>
+<span class="fc" id="L53">        return ResponseEntity.ok().body(noteCreated);</span>
+    }
+
+    @ApiOperation(value = &quot;Update note&quot;)
+    @PutMapping(&quot;/update/{id}&quot;)
+    public ResponseEntity&lt;Note&gt; updatePatient(@PathVariable String id, @RequestBody @Valid Note note) {
+<span class="fc" id="L59">        Note noteUpdated = service.updateNote(id, note);</span>
+<span class="fc" id="L60">        log.debug(&quot;controller : update note : &quot; + noteUpdated);</span>
+<span class="fc" id="L61">        return ResponseEntity.ok().body(noteUpdated);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

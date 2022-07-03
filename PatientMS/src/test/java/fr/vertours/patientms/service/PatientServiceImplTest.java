@@ -55,7 +55,6 @@ class PatientServiceImplTest {
         when(repository.save(expectedPatient)).thenReturn(expectedPatient);
 
         Patient actualPatient = classUnderTest.savePatient(expectedPatient);
-        System.out.println(actualPatient.toString());
         assertEquals(expectedPatient, actualPatient);
     }
 
@@ -73,11 +72,6 @@ class PatientServiceImplTest {
         Patient actualPatient = classUnderTest.updatePatient(61l, expectedPatient);
 
         assertEquals(actualPatient.getFirstName(),"léa");
-
-    }
-
-    @Test
-    void deletePatient() {
 
     }
 }
