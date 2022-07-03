@@ -46,13 +46,6 @@ public class NoteServiceImpl implements NoteService {
         return repository.save(dBNote);
     }
 
-    @Override
-    public void deleteNote(String id) {
-        Note note = getById(id);
-        repository.deleteById(note.getId());
-        log.debug("service : delete note by id : " + id);
-    }
-
     private Note getById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NoteDoesNotExistException(id));

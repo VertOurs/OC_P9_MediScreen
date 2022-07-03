@@ -60,12 +60,4 @@ public class NoteController {
         log.debug("controller : update note : " + noteUpdated);
         return ResponseEntity.ok().body(noteUpdated);
     }
-
-    @ApiOperation(value = "Delete note")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteNote(@PathVariable String id) {
-        service.deleteNote(id);
-        log.debug("controller : delete note by id : " + id);
-        return ResponseEntity.ok().body("Success, note are correctly delete");
-    }
 }

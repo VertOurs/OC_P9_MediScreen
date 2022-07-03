@@ -15,4 +15,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("Handling " + e.getClass().getSimpleName() + " due to " + e.getMessage() + ". More informations : "+e.getStackTrace());
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(PersonAlreadyPresentException.class)
+    public final ResponseEntity<String> handledPatientDoesNotExistException(PersonAlreadyPresentException e) {
+        log.error("Handling " + e.getClass().getSimpleName() + " due to " + e.getMessage() + ". More informations : "+e.getStackTrace());
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

@@ -35,28 +35,13 @@ public class AssessServiceImpl implements AssessService {
         int age = calculateAge(patient.getDateOfBirth());
         int triggersNb = getTriggersOccurrences(notes);
 
-        if (age > 30) {
-            if (triggersNb >= 2 && triggersNb < 6) {
-                return new Assessment(RiskLevels.BORDERLINE);
-            } else if (triggersNb >= 6 && triggersNb < 8) {
-                return new Assessment(RiskLevels.IN_DANGER);
-            } else {
-                return new Assessment(RiskLevels.EARLY_ONSET);
-            }
-        } else {
-            if (patient.getGender() == 'M') {
-                if (triggersNb >= 3 && triggersNb < 5 ) {
-                    return new Assessment(RiskLevels.IN_DANGER);
-                } else if (triggersNb >= 5) {
-                    return new Assessment(RiskLevels.EARLY_ONSET);
-                }
-            } else {
-                if (triggersNb >= 4 && triggersNb < 7 ) {
-                    return new Assessment(RiskLevels.IN_DANGER);
-                } else if (triggersNb >= 7) {
-                    return new Assessment(RiskLevels.EARLY_ONSET);
-                }
-            }
+        if (age >= 30) {
+            thirtyPlusRisk(triggersNb);
+        }
+        if (age < 30) {
+            return patient.getGender() == 'M'
+                    ? maleThirtyMinusRisk(triggersNb)
+                    : femaleThirtyMinusRisk(triggersNb);
         }
         return new Assessment(RiskLevels.NONE);
     }
@@ -76,7 +61,41 @@ public class AssessServiceImpl implements AssessService {
     private int calculateAge(LocalDate dateOfBirth) {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
+
+    private Assessment thirtyPlusRisk(int triggersNb) {
+        if (triggersNb >= 2 && triggersNb < 6) {
+            return new Assessment(RiskLevels.BORDERLINE);
+        }
+        if (triggersNb >= 6 && triggersNb < 8) {
+            return new Assessment(RiskLevels.IN_DANGER);
+        }
+        if (triggersNb >= 8) {
+            return new Assessment(RiskLevels.EARLY_ONSET);
+        }
+        return new Assessment(RiskLevels.NONE);
+    }
+
+    private Assessment maleThirtyMinusRisk(int triggersNb) {
+        if (triggersNb >= 3 && triggersNb < 5 ) {
+            return new Assessment(RiskLevels.IN_DANGER);
+        } else if (triggersNb >= 5) {
+            return new Assessment(RiskLevels.EARLY_ONSET);
+        }
+        return new Assessment(RiskLevels.NONE);
+    }
+
+    private Assessment femaleThirtyMinusRisk(int triggersNb) {
+        if (triggersNb >= 4 && triggersNb < 7 ) {
+            return new Assessment(RiskLevels.IN_DANGER);
+        } else if (triggersNb >= 7) {
+            return new Assessment(RiskLevels.EARLY_ONSET);
+        }
+        return new Assessment(RiskLevels.NONE);
+    }
 }
+
+
+
 // 30+  + 2 déc             ***BorderLIne*
 // 30+  + 6 dec             ***InDanger*
 //30+  -> 8 dec             ***EarlyOnset*

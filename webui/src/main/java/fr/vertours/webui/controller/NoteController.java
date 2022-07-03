@@ -54,7 +54,7 @@ public class NoteController {
         return "note/add";
     }
     @PostMapping("/createNote")
-    public String postForm(@ModelAttribute("dto") NoteDTO dto, BindingResult bindingResult, Model model) {
+    public String postForm(@Valid @ModelAttribute("dto") NoteDTO dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "note/add";
         }
@@ -73,9 +73,9 @@ public class NoteController {
         return "note/update";
     }
     @PostMapping("/updateNote")
-    public String postUpDateForm(@ModelAttribute("dto") NoteDTO dto, BindingResult bindingResult, Model model) {
+    public String postUpDateForm(@Valid @ModelAttribute("dto") NoteDTO dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "patient/update";
+            return "note/update";
         }
         noteProxy.updateNote(dto.getId(), NoteDTO.convertToBBean(dto));
         return "redirect:note/"+dto.getPatientId();

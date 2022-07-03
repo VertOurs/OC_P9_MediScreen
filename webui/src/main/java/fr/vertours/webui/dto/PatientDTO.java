@@ -1,8 +1,12 @@
 package fr.vertours.webui.dto;
 
 import fr.vertours.webui.bean.PatientBean;
+import fr.vertours.webui.validation.ValidBirthDate;
+import fr.vertours.webui.validation.ValidGender;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -10,11 +14,24 @@ import java.time.format.DateTimeFormatter;
 public class PatientDTO {
 
     private long id;
+
+    @NotBlank(message = "Please enter patient's firstname.")
+    @Size(max= 30, message = "Firstname should be maximum 30 characters.")
     private String firstName;
+
+    @NotBlank (message = "Please enter patient's lastname.")
+    @Size(max= 30, message = "Lastname should be maximum 30 characters")
     private String lastName;
+
+    @ValidBirthDate
     private String dateOfBirth;
+
+    @ValidGender
     private String gender;
+
+    @NotBlank(message = "Please enter patient's Address.")
     private String address;
+
     private String phone;
 
     public PatientDTO() {

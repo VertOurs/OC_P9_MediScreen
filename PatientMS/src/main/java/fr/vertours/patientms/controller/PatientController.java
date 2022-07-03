@@ -1,5 +1,6 @@
 package fr.vertours.patientms.controller;
 
+import fr.vertours.patientms.exception.PersonAlreadyPresentException;
 import fr.vertours.patientms.model.Patient;
 import fr.vertours.patientms.service.PatientService;
 import io.swagger.annotations.Api;
@@ -47,7 +48,7 @@ public class PatientController {
     }
 
     @ApiOperation(value = "Create new patient")
-    @PostMapping("/create") //TODO gestion erreur personne déja présente
+    @PostMapping("/create")
     public ResponseEntity<Patient> savePatient(@RequestBody @Valid Patient patient) {
         Patient patientCreated = service.savePatient(patient);
         log.debug("controller : create patient : " + patient);
@@ -60,12 +61,5 @@ public class PatientController {
         Patient patientUpdated = service.updatePatient(id, patient);
         log.debug("controller : update patient : " + patientUpdated);
         return ResponseEntity.ok().body(patientUpdated);
-    }
-    @ApiOperation(value = "Delete patient")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePatient(@PathVariable long id) {
-        service.deletePatient(id);
-        log.debug("controller : delete patient by id : " + id);
-        return ResponseEntity.ok().body("Success, patient are correctly delete");
     }
 }

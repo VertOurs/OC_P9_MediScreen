@@ -1,12 +1,14 @@
 package fr.vertours.patientms.service;
 
 import fr.vertours.patientms.exception.PatientDoesNotExistException;
+import fr.vertours.patientms.exception.PersonAlreadyPresentException;
 import fr.vertours.patientms.model.Patient;
 import fr.vertours.patientms.repository.PatientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -33,6 +35,15 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient savePatient(Patient patient) {
+        Optional.ofNullable(
+                repository.findByFirstNameAndLastName(
+                        patient.getFirstName(),
+                        patient.getLastName()))
+                .orElseThrow(() -> new PersonAlreadyPresentException(
+                        patient.getFirstName(),
+                        patient.getLastName())
+                );
+
         Patient patientCreated = repository.save(patient);
         log.debug("service : create patient : " + patient);
         return patientCreated;
@@ -50,13 +61,6 @@ public class PatientServiceImpl implements PatientService {
         dBPatient.setPhone(updatePatient.getPhone());
         log.debug("service : update patient : " + updatePatient);
         return repository.save(dBPatient);
-    }
-
-    @Override
-    public void deletePatient(long id) {
-        Patient patient = getById(id);
-        repository.deleteById(patient.getId());
-        log.debug("service : delete patient by id : " + id);
     }
 
     private Patient getById(long id) {

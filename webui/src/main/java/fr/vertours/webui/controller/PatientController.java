@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @Controller
 public class PatientController {
@@ -26,11 +28,19 @@ public class PatientController {
     }
 
     @PostMapping("/patient")
-    public String postForm(@ModelAttribute("dto") PatientDTO dto, BindingResult bindingResult, Model model) {
+    public String postForm(@Valid @ModelAttribute("dto") PatientDTO dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "patient/add";
         }
-        patientProxy.savePatient(PatientDTO.converterToBean(dto));
+        try {
+            patientProxy.savePatient(PatientDTO.converterToBean(dto));
+        } catch (RuntimeException e) {
+            bindingResult.rejectValue(
+                    "", "",
+                    "this user, was already present in database");
+            return "patient/add";
+        }
+
         return "redirect:home";
     }
 
@@ -44,16 +54,11 @@ public class PatientController {
     }
 
     @PostMapping("/patientUpdate")
-    public String postUpDateForm(@ModelAttribute("dto") PatientDTO dto, BindingResult bindingResult, Model model) {
+    public String postUpDateForm(@Valid @ModelAttribute("dto") PatientDTO dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "patient/update";
         }
-        try {
-            patientProxy.updatePatient(dto.getId(), PatientDTO.converterToBean(dto));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+        patientProxy.updatePatient(dto.getId(), PatientDTO.converterToBean(dto));
         return "redirect:home";
     }
 }
