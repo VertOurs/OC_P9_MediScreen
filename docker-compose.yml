@@ -27,21 +27,17 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/patient
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "rootroot"
-    #      DATABASE_HOST: mysql
-    #      DATABASE_PORT: 3308
-    #     DATABASE_NAME: patient
-    #      USERNAME: root
-    #      PASSWORD: rootroot
+
     ports:
       - "8081:8081"
-  #---------------------NOTE
+  #---------------------Note
   notedb:
     image: mongo:5
     container_name: note_db_nosql
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootroot
+    #environment:
+    #MONGO_INITDB_ROOT_USERNAME: root
+    #MONGO_INITDB_ROOT_PASSWORD: rootroot
     ports:
       - "27017:27017"
     volumes:
@@ -56,8 +52,8 @@ services:
       - notedb
     environment:
       SPRING_DATA_MONGODB_HOST: note_db_nosql
-      SPRING_DATA_MONGODB_USERNAME: root
-      SPRING_DATA_MONGODB_PASSWORD: rootroot
+      #SPRING_DATA_MONGODB_USERNAME: root
+      #SPRING_DATA_MONGODB_PASSWORD: rootroot
     ports:
       - "8082:8082"
   # ------------------------Assess
@@ -74,6 +70,21 @@ services:
       - NOTE_URL=note:8082
     ports:
       - "8083:8083"
+
+  front:
+    build: webui/.
+    container_name: web_ui
+    restart: always
+    depends_on:
+      - patient
+      - note
+      - assess
+    environment:
+      - PATIENT_URL=patient:8081
+      - NOTE_URL=note:8082
+      - ASSESS_URL=assess:8083
+    ports:
+      - "80:80"
 
 volumes:
   mysql-data:
