@@ -37,7 +37,6 @@ public class Patient {
     @Column
     private String address;
 
-    @NotBlank(message = "phone is mandatory")
     @Column
     private String phone;
 

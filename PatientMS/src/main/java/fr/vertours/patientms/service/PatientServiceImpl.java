@@ -35,14 +35,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient savePatient(Patient patient) {
-        Optional.ofNullable(
-                repository.findByFirstNameAndLastName(
-                        patient.getFirstName(),
-                        patient.getLastName()))
-                .orElseThrow(() -> new PersonAlreadyPresentException(
-                        patient.getFirstName(),
-                        patient.getLastName())
-                );
+        Optional<Patient> optional = repository.findOneByFirstNameAndLastName(
+                patient.getFirstName(),
+                patient.getLastName());
+        if (optional.isPresent()) {
+            throw new PersonAlreadyPresentException(
+                    patient.getFirstName(),
+                    patient.getLastName());
+        }
 
         Patient patientCreated = repository.save(patient);
         log.debug("service : create patient : " + patient);

@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class PatientServiceImplTest {
 
-    //@Mock
+
     PatientRepository repository = mock(PatientRepository.class);
 
     PatientServiceImpl classUnderTest = new PatientServiceImpl(repository);
@@ -47,12 +48,14 @@ class PatientServiceImplTest {
     void savePatient() {
         Patient expectedPatient = new Patient();
         expectedPatient.setId(6l);
-        expectedPatient.setFirstName("yo");
-
+        expectedPatient.setFirstName("Jean");
+        expectedPatient.setLastName("Moulin");
+        when(repository.findOneByFirstNameAndLastName("Jean", "Moulin"))
+                .thenReturn(Optional.empty());
         when(repository.save(expectedPatient)).thenReturn(expectedPatient);
 
         Patient actualPatient = classUnderTest.savePatient(expectedPatient);
-
+        System.out.println(actualPatient.toString());
         assertEquals(expectedPatient, actualPatient);
     }
 

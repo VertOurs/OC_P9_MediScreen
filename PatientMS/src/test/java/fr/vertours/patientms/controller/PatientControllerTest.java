@@ -1,7 +1,10 @@
 package fr.vertours.patientms.controller;
 
+import fr.vertours.patientms.model.Patient;
+import fr.vertours.patientms.repository.PatientRepository;
 import fr.vertours.patientms.service.PatientServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.CoreMatchers.is;
@@ -25,6 +30,22 @@ class PatientControllerTest {
     @Autowired
     PatientServiceImpl service;
 
+    @Autowired
+    PatientRepository repository;
+
+
+
+    static Patient getJean() {
+        Patient patient = new Patient();
+        patient.setId(1l);
+        patient.setFirstName("Jean");
+        patient.setLastName("Moulin");
+        patient.setDateOfBirth(LocalDate.of(1990, 01, 01));
+        patient.setGender('M');
+        patient.setAddress("rue du test");
+        patient.setPhone("phone du test");
+        return patient;
+    }
 
     @Test
     void home() throws Exception {
@@ -35,25 +56,30 @@ class PatientControllerTest {
     }
 
     @Test
-    @Disabled
     void allPatients() throws Exception {
+        repository.deleteAll();
+        Patient patient = getJean();
+        repository.save(patient);
+
         mvc.perform(get("/api/patient/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].firstName",
-                        is("Aymeric")));
+                        is("Jean")));
     }
 
     @Test
-    @Disabled
     void getPatientById() throws Exception {
+        repository.deleteAll();
+        Patient patient = getJean();
+        repository.save(patient);
         mvc.perform(get("/api/patient/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName",
-                        is("Aymeric")));
+                        is("Jean")));
     }
     @Test
-    @Disabled
     void getPatientByIdException() throws Exception {
+        repository.deleteAll();
         mvc.perform(get("/api/patient/150"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$",
@@ -61,47 +87,42 @@ class PatientControllerTest {
     }
 
     @Test
-    @Disabled
     void savePatient() throws Exception {
+        repository.deleteAll();
         String newPatient = " { "
-                + "\"firstName\" : \"Aymeric\","
+                + "\"firstName\" : \"Jean\","
                 + " \"lastName\" : \"Perrin\","
-                + " \"dateOfBirth\" : \"1966-12-31\","
+                + " \"dateOfBirth\" : \"1990-01-10\","
                 + " \"gender\" : \"M\","
-                + " \"address\" : \"1551, rue Louis Blériot\","
-                + " \"phone\": \"06 74 89 65 14\" }";
+                + " \"address\" : \"rue du test\","
+                + " \"phone\": \"phone du test\" }";
 
         mvc.perform(post("/api/patient/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(newPatient))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName", is("Aymeric")));
+                .andExpect(jsonPath("$.firstName", is("Jean")));
     }
 
     @Test
-    @Disabled
     void updatePatient() throws Exception {
+        repository.deleteAll();
+        Patient patient = getJean();
+        patient.setId(400l);
+        Patient save = repository.save(patient);
         String updatePatient = " { "
                 + "\"firstName\" : \"Léa\","
                 + " \"lastName\" : \"Perrin\","
-                + " \"dateOfBirth\" : \"1966-12-31\","
+                + " \"dateOfBirth\" : \"1990-01-10\","
                 + " \"gender\" : \"F\","
-                + " \"address\" : \"1551, rue Louis Blériot\","
-                + " \"phone\": \"06 74 89 65 14\" }";
+                + " \"address\" : \"rue du test\","
+                + " \"phone\": \"phone du test\" }";
 
-        mvc.perform(put("/api/patient/update/1")
+
+        mvc.perform(put("/api/patient/update/"+save.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updatePatient))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", is("Léa")));
-    }
-
-    @Test
-    @Disabled
-    void deletePatient() throws Exception {
-        mvc.perform(delete("/api/patient/delete/180"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$",
-                        is("this id : 180, was not found in database")));
     }
 }
