@@ -36,17 +36,15 @@ public class AssessServiceImpl implements AssessService {
         int triggersNb = getTriggersOccurrences(notes);
 
         if (age >= 30) {
-            thirtyPlusRisk(triggersNb);
-        }
-        if (age < 30) {
+            return thirtyPlusRisk(triggersNb);
+        } else {
             return patient.getGender() == 'M'
                     ? maleThirtyMinusRisk(triggersNb)
                     : femaleThirtyMinusRisk(triggersNb);
         }
-        return new Assessment(RiskLevels.NONE);
     }
 
-    private int getTriggersOccurrences(List<NoteBean> notes) {
+    public int getTriggersOccurrences(List<NoteBean> notes) {
         int nb = 0;
         for(NoteBean note : notes) {
             for(String trigger : Triggers.TRIGGERS) {
@@ -58,7 +56,7 @@ public class AssessServiceImpl implements AssessService {
         return nb;
     }
 
-    private int calculateAge(LocalDate dateOfBirth) {
+    public int calculateAge(LocalDate dateOfBirth) {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
 
