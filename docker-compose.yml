@@ -35,9 +35,9 @@ services:
     image: mongo:5
     container_name: note_db_nosql
     restart: always
-    #environment:
-    #MONGO_INITDB_ROOT_USERNAME: root
-    #MONGO_INITDB_ROOT_PASSWORD: rootroot
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootroot
     ports:
       - "27017:27017"
     volumes:
@@ -52,8 +52,8 @@ services:
       - notedb
     environment:
       SPRING_DATA_MONGODB_HOST: note_db_nosql
-      #SPRING_DATA_MONGODB_USERNAME: root
-      #SPRING_DATA_MONGODB_PASSWORD: rootroot
+      SPRING_DATA_MONGODB_USERNAME: root
+      SPRING_DATA_MONGODB_PASSWORD: rootroot
     ports:
       - "8082:8082"
   # ------------------------Assess
