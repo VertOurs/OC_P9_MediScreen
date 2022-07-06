@@ -10,17 +10,17 @@ services:
       MYSQL_PASSWORD: "rootroot"
       MYSQL_ROOT_PASSWORD: "rootroot"
       MYSQL_DATABASE: "patient"
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3308:3306"
     volumes:
       - mysql-data:/data/db
+    networks:
+      - medi-net
 
   patient:
-    #    image: patient_ms
     build: PatientMS/.
     container_name: patient_ms
-    #restart: always
+    restart: always
     depends_on:
       - mysql
     environment:
@@ -30,6 +30,9 @@ services:
 
     ports:
       - "8081:8081"
+    networks:
+      - medi-net
+
   #---------------------Note
   notedb:
     image: mongo:5
@@ -38,13 +41,15 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootroot
+      MONGO_INITDB_ROOT_DATABASE: note
     ports:
       - "27017:27017"
     volumes:
       - notedb-data:/data/db
+    networks:
+      - medi-net
 
   note:
-    #    image: note_ms
     build: NoteMS/.
     container_name: note_ms
     restart: always
@@ -54,11 +59,14 @@ services:
       SPRING_DATA_MONGODB_HOST: note_db_nosql
       SPRING_DATA_MONGODB_USERNAME: root
       SPRING_DATA_MONGODB_PASSWORD: rootroot
+      SPRING_DATA_MONGODB_DATABASE: note
+      SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE: admin
     ports:
       - "8082:8082"
+    networks:
+      - medi-net
   # ------------------------Assess
   assess:
-    #    image: assess_ms
     build: AssessMS/.
     container_name: assess_ms
     restart: always
@@ -66,11 +74,13 @@ services:
       - patient
       - note
     environment:
-      - PATIENT_URL=patient:8081
-      - NOTE_URL=note:8082
+      - PROXY_PATIENT=patient:8081
+      - PROXY_NOTE=note:8082
     ports:
       - "8083:8083"
-
+    networks:
+      - medi-net
+  # -------------------------FRONT
   front:
     build: webui/.
     container_name: web_ui
@@ -80,12 +90,18 @@ services:
       - note
       - assess
     environment:
-      - PATIENT_URL=patient:8081
-      - NOTE_URL=note:8082
-      - ASSESS_URL=assess:8083
+      - PROXY_PATIENT=patient:8081
+      - PROXY_NOTE=note:8082
+      - PROXY_ASSESS=assess:8083
     ports:
-      - "80:80"
+      - "8080:8080"
+    networks:
+      - medi-net
 
 volumes:
   mysql-data:
   notedb-data:
+
+networks:
+  medi-net:
+    driver: bridge

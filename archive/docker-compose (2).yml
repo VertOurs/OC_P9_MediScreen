@@ -1,0 +1,118 @@
+version: "3.3"
+
+services:
+  #-------------------Patient
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_PASSWORD: "rootroot"
+      MYSQL_ROOT_PASSWORD: "rootroot"
+      MYSQL_DATABASE: "patient"
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-data:/data/db
+    networks:
+      medinetwork:
+        ipv4_address: 172.20.0.2
+
+  patient:
+    #    image: patient_ms
+    build: PatientMS/.
+    container_name: patient_ms
+    #restart: always
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/patient
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "rootroot"
+
+    ports:
+      - "8081:8081"
+    networks:
+      medinetwork:
+        ipv4_address: 172.20.0.3
+  #---------------------Note
+  notedb:
+    image: mongo:5
+    container_name: note_db_nosql
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootroot
+      MONGO_INITDB_ROOT_DATABASE: note
+    ports:
+      - "27017:27017"
+    volumes:
+      - notedb-data:/data/db
+    networks:
+      medinetwork:
+        ipv4_address: 172.20.0.4
+
+  note:
+    #    image: note_ms
+    build: NoteMS/.
+    container_name: note_ms
+    restart: always
+    depends_on:
+      - notedb
+    environment:
+      SPRING_DATA_MONGODB_HOST: note_db_nosql
+      SPRING_DATA_MONGODB_USERNAME: root
+      SPRING_DATA_MONGODB_PASSWORD: rootroot
+      SPRING_DATA_MONGODB_DATABASE: note
+      SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE: admin
+    ports:
+      - "8082:8082"
+    networks:
+      medinetwork:
+        ipv4_address: 172.20.0.5
+  # ------------------------Assess
+  assess:
+    #    image: assess_ms
+    build: AssessMS/.
+    container_name: assess_ms
+    restart: always
+    depends_on:
+      - patient
+      - note
+    environment:
+      - PATIENT_URL=patient:8081
+      - NOTE_URL=note:8082
+    ports:
+      - "8083:8083"
+    networks:
+      medinetwork:
+        ipv4_address: 172.20.0.6
+
+  front:
+    build: webui/.
+    container_name: web_ui
+    restart: always
+    depends_on:
+      - patient
+      - note
+      - assess
+    environment:
+      - PATIENT_URL=patient:8081
+      - NOTE_URL=note:8082
+      - ASSESS_URL=assess:8083
+    ports:
+      - "80:80"
+    networks:
+      medinetwork:
+        ipv4_address: 172.20.0.7
+
+volumes:
+  mysql-data:
+  notedb-data:
+
+
+networks:
+  medinetwork:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
