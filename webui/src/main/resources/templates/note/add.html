@@ -17,7 +17,7 @@
           class="form-signin text-center">
         <img class="mb-4" src="../../images/logo.jpeg" alt="" width="150" height="60">
         <div>
-            <p> Note For the Patient : <span th:text="${dto.patientId}"></span></p>
+            <p> New Note :</p>
         </div>
         <!-- Form levels error messages here -->
         <div class="mb-3">
@@ -33,14 +33,17 @@
         <!-- Recommendation -->
         <div class="mb-3">
             <div>
-                <input th:field="*{Recommendation}" type="text" class="form-control" placeholder="Recommendation">
+                <textarea th:field="*{Recommendation}" type="text" class="form-control" placeholder="Recommendation" rows="3"></textarea>
             </div>
             <div>
                 <span class="text-danger" th:errors="*{recommendation}"> </span>
             </div>
         </div>
         <!--Register button -->
-        <button type="submit" class="btn btn-primary">Register Note</button>
+        <div class="btn-group mx-2">
+            <a class="btn btn-outline-success " type="" th:href="@{/home}">Go back</a>
+            <button type="submit" class="btn btn-primary">Register Note</button>
+        </div>
     </form>
 </main>
 </body>

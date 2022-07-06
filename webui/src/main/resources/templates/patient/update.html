@@ -49,7 +49,7 @@
         <!-- Gender -->
         <div class="mb-3">
             <div>
-                <input th:field="*{gender}" type="text" class="form-control" placeholder="Gender">
+                <input th:field="*{gender}" type="text" maxlength="1" class="form-control" placeholder="Gender">
             </div>
             <div>
                 <span class="text-danger" th:errors="*{gender}"> </span>
@@ -83,7 +83,10 @@
             </div>
         </div>
         <!--Register button -->
-        <button type="submit" class="btn btn-primary">UpDate Patient</button>
+        <div class="btn-group mx-2">
+            <a class="btn btn-outline-success col-12" type="" th:href="@{/home}">Go back</a>
+            <button type="submit" class="btn btn-primary mx-2">UpDate Patient</button>
+        </div>
     </form>
 </main>
 </body>

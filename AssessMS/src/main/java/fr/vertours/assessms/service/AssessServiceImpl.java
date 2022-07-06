@@ -48,7 +48,7 @@ public class AssessServiceImpl implements AssessService {
         int nb = 0;
         for(NoteBean note : notes) {
             for(String trigger : Triggers.TRIGGERS) {
-                if (note.getRecommendation().contains(trigger)) {
+                if (note.getRecommendation().toLowerCase().contains(trigger)) {
                     nb++;
                 }
             }
@@ -76,20 +76,24 @@ public class AssessServiceImpl implements AssessService {
     private Assessment maleThirtyMinusRisk(int triggersNb) {
         if (triggersNb >= 3 && triggersNb < 5 ) {
             return new Assessment(RiskLevels.IN_DANGER);
-        } else if (triggersNb >= 5) {
+        }
+        if (triggersNb >= 5) {
             return new Assessment(RiskLevels.EARLY_ONSET);
         }
         return new Assessment(RiskLevels.NONE);
     }
 
     private Assessment femaleThirtyMinusRisk(int triggersNb) {
+
         if (triggersNb >= 4 && triggersNb < 7 ) {
             return new Assessment(RiskLevels.IN_DANGER);
-        } else if (triggersNb >= 7) {
+        }
+        if (triggersNb >= 7) {
             return new Assessment(RiskLevels.EARLY_ONSET);
         }
         return new Assessment(RiskLevels.NONE);
     }
+
 }
 
 

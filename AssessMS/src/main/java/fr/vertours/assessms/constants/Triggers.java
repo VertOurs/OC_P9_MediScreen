@@ -6,18 +6,19 @@ public class Triggers {
 
     public static final List<String> TRIGGERS =
             List.of(
-                    "Hémoglobine A1C",
-                    "Microalbumine",
-                    "Taille",
-                    "Poids",
-                    "Fumeur",
-                    "Anormal",
-                    "Cholestérol",
-                    "Vertige",
-                    "Rechute",
-                    "Réaction",
-                    "Anticorps"
+                    "hémoglobine a1c",
+                    "microalbumine",
+                    "taille",
+                    "poids",
+                    "fumeur",
+                    "anormal",
+                    "cholestérol",
+                    "vertige",
+                    "rechute",
+                    "réaction",
+                    "anticorps"
             );
+
 
 
 
