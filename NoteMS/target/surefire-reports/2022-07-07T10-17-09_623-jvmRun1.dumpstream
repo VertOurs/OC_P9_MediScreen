@@ -1,0 +1,41 @@
+# Created at 2022-07-07T10:18:15.027
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:397)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+
+
+# Created at 2022-07-07T10:18:18.473
+Unexpected IOException: 7,1,fr.vertours.notems.controller.NoteControllerTest,getNoteById,null,Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}],null,Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}],NoteControllerTest.getNoteById:60 \00BB DataAccessResourceFailure Timed out after ...,org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]\000A\0009at fr.vertours.notems.controller.NoteControllerTest.getNoteById(NoteControllerTest.java:60)\000ACaused by: com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]\000A\0009at fr.vertours.notems.controller.NoteControllerTest.getNoteById(NoteControllerTest.java:60)\000A
+
+
+# Created at 2022-07-07T10:18:18.475
+Unexpected IOException: 5,1,fr.vertours.notems.controller.NoteControllerTest,home,null,null,null
+
+
+# Created at 2022-07-07T10:18:18.541
+Unexpected IOException: 6,1,fr.vertours.notems.controller.NoteControllerTest,home,null,null,null
+
+
+# Created at 2022-07-07T10:18:18.542
+Unexpected IOException: 5,1,fr.vertours.notems.controller.NoteControllerTest,listNote,null,null,null
+
+
+# Created at 2022-07-07T10:18:18.544
+Unexpected IOException with stream: 2022-07-07 10:18:18.544  INFO 31072 --- [           main] org.mongodb.driver.cluster               : Cluster description not yet available. Waiting for 30000 ms before timing out
+
+
+# Created at 2022-07-07T10:18:48.555
+Unexpected IOException: 7,1,fr.vertours.notems.controller.NoteControllerTest,listNote,null,Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}],null,Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}],NoteControllerTest.listNote:52 \00BB DataAccessResourceFailure Timed out after 300...,org.springframework.dao.DataAccessResourceFailureException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]; nested exception is com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]\000A\0009at fr.vertours.notems.controller.NoteControllerTest.listNote(NoteControllerTest.java:52)\000ACaused by: com.mongodb.MongoTimeoutException: Timed out after 30000 ms while waiting to connect. Client view of cluster state is {type=UNKNOWN\002C servers=[{address=localhost:27017\002C type=UNKNOWN\002C state=CONNECTING\002C exception={com.mongodb.MongoSocketOpenException: Exception opening socket}\002C caused by {java.net.ConnectException: Connection refused: connect}}]\000A\0009at fr.vertours.notems.controller.NoteControllerTest.listNote(NoteControllerTest.java:52)\000A
+
+
+# Created at 2022-07-07T10:18:48.557
+Unexpected IOException: 5,1,fr.vertours.notems.controller.NoteControllerTest,updatePatient,null,null,null
+
+
+# Created at 2022-07-07T10:18:48.559
+Unexpected IOException with stream: 2022-07-07 10:18:48.559  INFO 31072 --- [           main] org.mongodb.driver.cluster               : Cluster description not yet available. Waiting for 30000 ms before timing out
+
+
