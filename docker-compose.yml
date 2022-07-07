@@ -12,8 +12,7 @@ services:
       MYSQL_DATABASE: "patient"
     ports:
       - "3308:3306"
-    volumes:
-      - mysql-data:/data/db
+
     networks:
       - medi-net
 
@@ -43,9 +42,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: rootroot
       MONGO_INITDB_ROOT_DATABASE: note
     ports:
-      - "27017:27017"
-    volumes:
-      - notedb-data:/data/db
+      - "27018:27017"
+
     networks:
       - medi-net
 
@@ -98,9 +96,6 @@ services:
     networks:
       - medi-net
 
-volumes:
-  mysql-data:
-  notedb-data:
 
 networks:
   medi-net:
