@@ -16,4 +16,5 @@ Mediscreen is an application that helps doctors to detect diabetes. The applicat
 - open Browser and go to `` http://localhost:8080/home``.
 
 ### 3 Diagram
-  ![diagram](P9_Diagram.jpeg)
+![](P9%20_%20Diagram.jpeg)
+
